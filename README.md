@@ -81,7 +81,7 @@ The AI component will provide:
 * Natural-language queries (e.g. *“What do I have to work on this week?”*)
 * Smart trend visualization & project analytics
 
-*(Coming soon — stay tuned.)*
+*(Coming soon - stay tuned.)*
 
 ---
 
