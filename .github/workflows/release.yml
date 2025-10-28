@@ -2,12 +2,11 @@ name: Release (Win + Mac)
 
 on:
   push:
-    tags:
-      - 'v*'                 # tags like v1.0.0
-  workflow_dispatch:         # allow manual runs
+    tags: [ 'v*' ]           # e.g. v1.0.1
+  workflow_dispatch:
 
 permissions:
-  contents: write            # needed to create releases
+  contents: write
 
 jobs:
   build-windows:
@@ -35,25 +34,20 @@ jobs:
           --add-data "../LICENSE;."
           --name "STAR Dashboard" app.py
 
+      # Create the ZIP **in source/** and DO NOT move it up (no '..' later)
       - name: Package (zip)
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
-          # zip the built folder dist\STAR Dashboard\
           $zip = "STAR-Dashboard-Windows-${{ github.ref_name }}.zip"
           Compress-Archive -Path "dist\STAR Dashboard\*" -DestinationPath $zip
-          Move-Item $zip ..\  # move zip to repo root for easy collection
-
-      - name: List outputs
-        shell: pwsh
-        run: |
-          Get-ChildItem ..\ -Filter *.zip -Recurse
+          Get-ChildItem -Path $zip -Force
 
       - name: Upload artifact (Windows zip)
         uses: actions/upload-artifact@v4
         with:
           name: win-zip
-          path: ../STAR-Dashboard-Windows-${{ github.ref_name }}.zip
+          path: source/STAR-Dashboard-Windows-${{ github.ref_name }}.zip
           if-no-files-found: error
           retention-days: 7
 
@@ -82,22 +76,20 @@ jobs:
           --add-data "../LICENSE:."
           --name "STAR Dashboard" app.py
 
+      # Create the ZIP **in source/** (no '..' in upload path)
       - name: Package (.app → zip)
         run: |
           set -e
           cd dist
           zip -r "../STAR-Dashboard-macOS-${{ github.ref_name }}.zip" "STAR Dashboard.app"
           cd ..
-          mv "STAR-Dashboard-macOS-${{ github.ref_name }}.zip" .. # move to repo root
-
-      - name: List outputs
-        run: ls -lah ../*.zip
+          ls -lah "STAR-Dashboard-macOS-${{ github.ref_name }}.zip"
 
       - name: Upload artifact (macOS zip)
         uses: actions/upload-artifact@v4
         with:
           name: mac-zip
-          path: ../STAR-Dashboard-macOS-${{ github.ref_name }}.zip
+          path: source/STAR-Dashboard-macOS-${{ github.ref_name }}.zip
           if-no-files-found: error
           retention-days: 7
 
@@ -107,7 +99,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          merge-multiple: true   # put all artifacts into one folder
+          merge-multiple: true
           path: ./artifacts
 
       - name: Show downloaded files
