@@ -165,7 +165,7 @@ STAR-Dashboard/
 ## Bug Reports & Contact
 
 If you find a bug, issue, or visual glitch:
-**Email:** [saivamsi.karnam@outlook.com](mailto:saivamsi.karnam@outlook.com)
+**Email:** [saivamsi.karnam@gmail.com](mailto:saivamsi.karnam@gmail.com)
 
 For **custom features, business integrations, or consulting inquiries** (e.g., Maritime IoT, Robotics, or AI systems):
 Please reach out directly via the same email.
@@ -197,7 +197,7 @@ Developed by **Sai Vamsi Karnam**
 
 > *Systems Architect — IoT / Robotics / Embedded AI Systems*
 
-[saivamsi.karnam@outlook.com](mailto:saivamsi.karnam@outlook.com)
+[saivamsi.karnam@gmail.com](mailto:saivamsi.karnam@gmail.com)
 
 ---
 
