@@ -69,7 +69,7 @@ Runs locally via **Flask**, stores everything in a local **SQLite** database, an
 
 ### Developer Info
 
-* Floating “ℹ️” button opens developer/contact info
+* Floating “i” button opens developer/contact info
 * Great segue for future built-in LLM assistant
 
 ---
@@ -86,9 +86,9 @@ The AI component will provide:
 
 ---
 
-## 🛠️ Installation
+## Installation
 
-### 🪟 Option 1 - Download Prebuilt App
+### Option 1 - Download Prebuilt App
 
 Go to the [**Releases**](https://github.com/vamsi-karnam/STAR-Dashboard/releases) page and grab the latest version for your OS:
 
@@ -165,10 +165,10 @@ STAR-Dashboard/
 ## Bug Reports & Contact
 
 If you find a bug, issue, or visual glitch:
-📧 **Email:** [saivamsi.karnam@outlook.com](mailto:saivamsi.karnam@outlook.com)
+**Email:** [saivamsi.karnam@outlook.com](mailto:saivamsi.karnam@outlook.com)
 
 For **custom features, business integrations, or consulting inquiries** (e.g., Maritime IoT, Robotics, or AI systems):
-📩 Reach out directly via the same email.
+Please reach out directly via the same email.
 
 ---
 
@@ -197,7 +197,7 @@ Developed by **Sai Vamsi Karnam**
 
 > *Principal Systems Architect — IoT / Robotics / Embedded AI Systems*
 
-📩 [vamsi.karnam@outlook.com](mailto:saivamsi.karnam@outlook.com)
+[vamsi.karnam@outlook.com](mailto:saivamsi.karnam@outlook.com)
 
 ---
 
