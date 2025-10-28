@@ -1,0 +1,115 @@
+Personal Use Source License (PUSL)
+
+Applies to all versions and derivatives of the “STAR” (“Status Tracking & AI Reporting”) Dashboard software and related source code, including but not limited to “STAR Dashboard,” “STAR-Dashboard,” or any equivalent naming variations.
+Copyright © 2025 Sai Vamsi Karnam
+
+1. Grant of License
+
+The Licensor (“Sai Vamsi Karnam”) grants any individual (“Licensee”) a non-exclusive, non-transferable, royalty-free license to:
+
+Use the Software for personal, non-commercial purposes
+
+Modify the Software for personal use
+
+Host or run modified versions for personal use only
+
+This License applies to all past, present, and future versions, updates, and derivatives of the Software, regardless of name or format, unless explicitly superseded by a later version of this License.
+
+2. Definitions
+
+Software:
+The “STAR” (“Status Tracking & AI Reporting”) Dashboard application, including all associated source code, designs, user interfaces, scripts, build configurations, documentation, and other assets released by the Licensor under this License.
+This definition explicitly includes any variant naming such as “STAR Dashboard,” “STAR-Dashboard,” or equivalent forms.
+
+Personal Use:
+Use by an individual for private, non-commercial purposes, including self-learning, experimentation, research, and personal productivity, or a combination of any of the situations mentioned.
+
+Commercial Use:
+Any use intended for or resulting in financial gain, or any use within organizations, team environments, institutions, or services that are monetized, client-facing, or revenue-generating, or a combination of any of the situations mentioned.
+
+3. Restrictions
+
+The Licensee shall not:
+
+Use the Software or any derivative for commercial purposes.
+
+Sell, license, sublicense, or otherwise monetize the Software or modifications.
+
+Use the Software in organizational, business, client-facing, or monetized environments.
+
+Use the Software or derivatives in any product, service, or platform that generates revenue through advertising, subscriptions, lead generation, or other indirect monetization.
+
+Remove, obscure, or alter any attribution to the Licensor.
+
+Distribute the Software or derivatives without this License and required attribution.
+
+Violation of any of the above automatically terminates the License and all associated rights.
+
+4. Attribution
+
+All copies, modifications, and derivative works must retain:
+
+The original copyright notice.
+
+This License in full.
+
+A visible attribution:
+
+“Based on software by Sai Vamsi Karnam”
+
+If displayed publicly (including web apps, GUIs, or documentation), attribution must appear visibly in an About, Info, or Credits section.
+
+5. Redistribution
+
+Redistribution is permitted only under all of the following conditions:
+
+It is done for personal, non-commercial use.
+
+This License is included in full and unmodified.
+
+Attribution is preserved and clearly visible.
+
+No monetization, advertising, or commercial deployment occurs.
+
+Redistribution that violates any of these terms immediately voids this License.
+
+Redistribution must not occur within organizational or commercial contexts, including internal tools, shared platforms, or client-facing environments.
+
+5A. Contributions
+
+Licensees may submit feedback, bug reports, or improvements. All such contributions are voluntary and do not confer ownership or rights beyond personal use. The Licensor retains full rights to incorporate, modify, or reject contributions.
+
+6. Termination
+
+This License is automatically and permanently terminated if the Licensee violates any term herein.
+Upon termination:
+
+All copies and derivatives of the Software must be destroyed or permanently deleted
+
+Continued use after termination constitutes infringement and may result in legal action
+
+The Licensor reserves the right to pursue all remedies available under law.
+
+7. No Warranty
+
+The Software is provided “as is”, without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.
+The Licensor shall not be liable for any damages, losses, or claims arising from the use or inability to use the Software.
+
+8. Governing Law
+
+This License shall be governed by and construed in accordance with the laws of the United Kingdom, without regard to its conflict-of-law principles.
+
+9. Applicability to Future Versions
+
+This License applies to all past, present, and future versions, updates, modifications, and derivative works of the Software—regardless of name or variant—unless explicitly replaced by a later version of this License.
+
+If a future version of this License is published by the Licensor, the Licensee may choose to continue using the Software under:
+
+The version originally received, or The updated version of this License, at their discretion.
+
+10. Severability
+
+If any provision of this License is found invalid or unenforceable, the remaining provisions shall remain in full force and effect.
+Failure by the Licensor to enforce any provision shall not constitute a waiver of that provision.
+
+End of License

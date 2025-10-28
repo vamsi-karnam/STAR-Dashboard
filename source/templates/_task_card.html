@@ -1,0 +1,107 @@
+<!--
+  STAR Dashboard – Personal Use Only
+  Licensed under the Personal Use Source License (PUSL)
+  Copyright © 2025 Sai Vamsi Karnam
+  Attribution Required – No Commercial Use Permitted
+  See LICENSE for full terms
+-->
+
+
+{# Card or Detail Modal depending on context #}
+{% if detail %}
+  <div class="modal-header">
+    <h3>Edit Task</h3>
+    <button class="close" data-close>&times;</button>
+  </div>
+  <div class="modal-body">
+    <form id="taskMetaForm" onsubmit="return false;" data-task-id="{{ task.id }}">
+      <label>Title
+        <input type="text" name="title" value="{{ task.title }}" />
+      </label>
+      <label>Description
+        <textarea name="description">{{ task.description }}</textarea>
+      </label>
+      <label>Start date
+        <input type="date" name="start_date" value="{{ task.start_date|default('', true) }}" />
+      </label>
+      <label>Due date
+        <input type="date" name="due_date" value="{{ task.due_date|default('', true) }}" />
+      </label>
+      <label>Tags (comma separated)
+        <input type="text" name="tags" value="{{ task.tags | map(attribute='name') | join(', ') }}" placeholder="work, personal, project-x" />
+      </label>
+      <label class="inline">
+        <input type="checkbox" name="archived" {% if task.archived %}checked{% endif %} /> Archived
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn primary" onclick="saveTaskMeta({{ task.id }})">Save</button>
+        <button type="button" class="btn danger" onclick="deleteTask({{ task.id }})">Delete</button>
+        <button type="button" class="btn" data-close>Close</button>
+      </div>
+    </form>
+
+    <hr />
+
+    <h4>Attachments</h4>
+    <form class="attach-form" method="post" action="{{ url_for('upload_attachments', task_id=task.id) }}" enctype="multipart/form-data">
+    <input type="file" name="files" multiple />
+    <button type="submit" class="btn">Upload</button>
+    </form>
+
+    <ul class="attachments">
+    {% for a in attachments %}
+        <li>
+        <a href="{{ url_for('download_attachment', att_id=a.id) }}">{{ a.original_name }}</a>
+        <span class="muted">({{ (a.size_bytes / 1024) | round(1) }} KB)</span>
+        <form class="inline" method="post" action="{{ url_for('delete_attachment', att_id=a.id) }}" onsubmit="return confirm('Delete this file?')">
+            <button class="btn danger" type="submit">Delete</button>
+        </form>
+        </li>
+    {% else %}
+        <li class="muted">No attachments yet.</li>
+    {% endfor %}
+    </ul>
+
+    <h4>Comments</h4>
+    <ul class="comments">
+    {% for c in comments %}
+        <li>
+        <div class="comment-meta">{{ c.created_at.strftime('%Y-%m-%d %H:%M') }}</div>
+        <div class="comment-text">{{ c.content }}</div>
+        </li>
+    {% else %}
+        <li class="muted">No comments yet.</li>
+    {% endfor %}
+    </ul>
+
+
+
+    <form method="post" action="{{ url_for('add_comment', task_id=task.id) }}" class="comment-form">
+      <textarea name="content" placeholder="Add a comment..." required></textarea>
+      <div>
+        <button type="submit" class="btn">Add Comment</button>
+      </div>
+    </form>
+  </div>
+{% else %}
+  <div class="card task" draggable="true" data-task-id="{{ task.id }}">
+    <div class="card-header">
+      <div class="title" title="Click for details">{{ task.title }}</div>
+      <div class="meta">
+        {% if task.due_date %}
+          <span class="due">{{ task.due_date.strftime('%Y-%m-%d') }}</span>
+        {% endif %}
+        {% if task.tags %}
+          <span class="tags">
+            {% for tag in task.tags %}
+              <span class="tag-chip">{{ tag.name }}</span>
+            {% endfor %}
+          </span>
+        {% endif %}
+      </div>
+    </div>
+    {% if task.description %}
+      <div class="card-body">{{ task.description }}</div>
+    {% endif %}
+  </div>
+{% endif %}

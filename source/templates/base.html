@@ -1,0 +1,111 @@
+<!--
+  STAR Dashboard – Personal Use Only
+  Licensed under the Personal Use Source License (PUSL)
+  Copyright © 2025 Sai Vamsi Karnam
+  Attribution Required – No Commercial Use Permitted
+  See LICENSE for full terms
+-->
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Status Board — {{ title if title else 'Dashboard' }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">STAR Dashboard</div>
+    <nav class="tabs">
+      <a href="{{ url_for('board') }}" class="tab {{ 'active' if request.path == url_for('board') else '' }}">Status Board</a>
+      <a href="{{ url_for('calendar_view') }}" class="tab {{ 'active' if request.path == url_for('calendar_view') else '' }}">Calendar</a>
+      <a href="{{ url_for('export_json') }}" class="tab">Export JSON</a>
+    </nav>
+    <!-- Floating Info button on top-right -->
+    <button id="infoBtn" class="info-btn" title="About / Developer Info">i</button>
+  </header>
+
+  <main class="container">
+    <!-- Global Filters/Search -->
+    <section class="filters">
+      <form id="filterForm" method="get" action="{{ request.path }}">
+        <input type="text" name="q" placeholder="Search..." value="{{ q }}" />
+
+        <div class="chips">
+          <span class="muted">Show only:</span>
+          <input type="text" name="show" placeholder="work, project-x" value="{{ ','.join(show_tags) }}" />
+          <span class="muted">Hide:</span>
+          <input type="text" name="hide" placeholder="personal" value="{{ ','.join(hide_tags) }}" />
+          <label class="inline">
+            <input type="checkbox" name="archived" value="1" {% if include_archived %}checked{% endif %} /> include archived
+          </label>
+          <button class="btn">Apply</button>
+          <a class="btn" href="{{ request.path }}">Clear</a>
+        </div>
+      </form>
+    </section>
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Floating Add Button -->
+  <button id="addTaskBtn" class="fab" title="Add Task">+</button>
+
+  <!-- Add Task Modal -->
+  <div id="addTaskModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add Task</h3>
+        <button class="close" data-close>&times;</button>
+      </div>
+      <form method="post" action="{{ url_for('create_task') }}" class="modal-body">
+        <label>Title
+          <input type="text" name="title" placeholder="Task title" required />
+        </label>
+        <label>Description
+          <textarea name="description" placeholder="Optional details"></textarea>
+        </label>
+        <label>Start date
+          <input type="date" name="start_date" />
+        </label>
+        <label>Due date
+          <input type="date" name="due_date" />
+        </label>
+        <label>Tags (comma separated)
+          <input type="text" name="tags" placeholder="work, personal, project-x" />
+        </label>
+        <div class="modal-actions">
+          <button type="submit" class="btn primary">Add</button>
+          <button type="button" class="btn" data-close>Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Task Detail Modal (content fetched dynamically) -->
+  <div id="taskDetailModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content" id="taskDetailContent"></div>
+  </div>
+
+  <!-- About / Info Modal -->
+  <div id="infoModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>About This App</h3>
+        <button class="close" data-close>&times;</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>App:</strong> STAR "Status Tracking & AI Reporting" Dashboard v0.1 (Dev, Local, Flask)</p>
+        <p><strong>Version:</strong> 0.1 (Attachments & Info)</p>
+        <p><strong>Developer:</strong> Vamsi Karnam</p>
+        <p><strong>Contact:</strong> saivamsi.karnam@gmail.com • www.site.example</p>
+        <p class="muted">This project is a minimalistic and local-first dashboard with persistent storage - Development version. Future ideas: built-in LLM assistant for summarizing tasks, extracting tags from descriptions, and generating plans.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

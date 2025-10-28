@@ -1,0 +1,40 @@
+<!--
+  STAR Dashboard – Personal Use Only
+  Licensed under the Personal Use Source License (PUSL)
+  Copyright © 2025 Sai Vamsi Karnam
+  Attribution Required – No Commercial Use Permitted
+  See LICENSE for full terms
+-->
+
+
+{% extends 'base.html' %}
+{% block content %}
+  <section class="board">
+    <div class="column" data-status="todo">
+      <h2>To Do</h2>
+      <div class="dropzone" data-status="todo">
+        {% for task in tasks_by_status['todo'] %}
+          {% include '_task_card.html' %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="column" data-status="inprogress">
+      <h2>In Progress</h2>
+      <div class="dropzone" data-status="inprogress">
+        {% for task in tasks_by_status['inprogress'] %}
+          {% include '_task_card.html' %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="column" data-status="done">
+      <h2>Completed</h2>
+      <div class="dropzone" data-status="done">
+        {% for task in tasks_by_status['done'] %}
+          {% include '_task_card.html' %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endblock %}

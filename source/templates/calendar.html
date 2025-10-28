@@ -1,0 +1,45 @@
+<!--
+  STAR Dashboard – Personal Use Only
+  Licensed under the Personal Use Source License (PUSL)
+  Copyright © 2025 Sai Vamsi Karnam
+  Attribution Required – No Commercial Use Permitted
+  See LICENSE for full terms
+-->
+
+
+{% extends 'base.html' %}
+{% block content %}
+  <section class="calendar">
+    <header class="calendar-header">
+      <h2>Calendar (by Due Date)</h2>
+      <p class="muted">Shows tasks on their selected due date. Use the Status Board to add tasks.</p>
+    </header>
+
+    <div class="calendar-grid">
+      {% if tasks_by_day %}
+        {% for d, items in tasks_by_day|dictsort %}
+          <div class="calendar-day">
+            <div class="calendar-date">{{ d.strftime('%Y-%m-%d') }}</div>
+            <ul>
+              {% for t in items %}
+                <li>
+                  <span class="badge {{ t.status }}">{{ t.status }}</span>
+                  <strong>{{ t.title }}</strong>
+                  {% if t.start_date and t.due_date %}
+                    <span class="muted">({{ t.start_date.strftime('%Y-%m-%d') }} → {{ t.due_date.strftime('%Y-%m-%d') }})</span>
+                  {% elif t.due_date %}
+                      <span class="muted">(due {{ t.due_date.strftime('%Y-%m-%d') }})</span>
+                  {% elif t.start_date %}
+                    <span class="muted">(from {{ t.start_date.strftime('%Y-%m-%d') }})</span>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="muted">No tasks with due dates yet (or filters hide them).</p>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}
