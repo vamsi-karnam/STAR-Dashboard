@@ -70,7 +70,6 @@ Runs locally via **Flask**, stores everything in a local **SQLite** database, an
 ### Developer Info
 
 * Floating “i” button opens developer/contact info
-* Great segue for future built-in LLM assistant
 
 ---
 
