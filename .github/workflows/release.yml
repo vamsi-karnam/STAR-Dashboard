@@ -3,11 +3,11 @@ name: Release (Win + Mac)
 on:
   push:
     tags:
-      - 'v*'                 # run on tags like v1.0.0, v1.1.0, etc.
-  workflow_dispatch:         # allow manual runs too
+      - 'v*'                 # tags like v1.0.0
+  workflow_dispatch:         # allow manual runs
 
 permissions:
-  contents: write            # needed for creating the GitHub Release
+  contents: write            # needed to create releases
 
 jobs:
   build-windows:
@@ -17,19 +17,10 @@ jobs:
         working-directory: source
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        with: { fetch-depth: 0 }
 
       - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~\AppData\Local\pip\Cache
-          key: ${{ runner.os }}-pip-${{ hashFiles('source/requirements.txt') }}
-          restore-keys: ${{ runner.os }}-pip-
+        with: { python-version: '3.12' }
 
       - name: Install deps
         run: |
@@ -48,16 +39,23 @@ jobs:
         shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
-          $out = "STAR-Dashboard-Windows-${{ github.ref_name }}.zip"
-          Compress-Archive -Path "dist\STAR Dashboard\*" -DestinationPath $out
-          Move-Item $out ..\
+          # zip the built folder dist\STAR Dashboard\
+          $zip = "STAR-Dashboard-Windows-${{ github.ref_name }}.zip"
+          Compress-Archive -Path "dist\STAR Dashboard\*" -DestinationPath $zip
+          Move-Item $zip ..\  # move zip to repo root for easy collection
+
+      - name: List outputs
+        shell: pwsh
+        run: |
+          Get-ChildItem ..\ -Filter *.zip -Recurse
 
       - name: Upload artifact (Windows zip)
         uses: actions/upload-artifact@v4
         with:
           name: win-zip
-          path: STAR-Dashboard-Windows-${{ github.ref_name }}.zip
+          path: ../STAR-Dashboard-Windows-${{ github.ref_name }}.zip
           if-no-files-found: error
+          retention-days: 7
 
   build-macos:
     runs-on: macos-latest
@@ -66,19 +64,10 @@ jobs:
         working-directory: source
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        with: { fetch-depth: 0 }
 
       - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ~/Library/Caches/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('source/requirements.txt') }}
-          restore-keys: ${{ runner.os }}-pip-
+        with: { python-version: '3.12' }
 
       - name: Install deps
         run: |
@@ -99,13 +88,18 @@ jobs:
           cd dist
           zip -r "../STAR-Dashboard-macOS-${{ github.ref_name }}.zip" "STAR Dashboard.app"
           cd ..
+          mv "STAR-Dashboard-macOS-${{ github.ref_name }}.zip" .. # move to repo root
+
+      - name: List outputs
+        run: ls -lah ../*.zip
 
       - name: Upload artifact (macOS zip)
         uses: actions/upload-artifact@v4
         with:
           name: mac-zip
-          path: STAR-Dashboard-macOS-${{ github.ref_name }}.zip
+          path: ../STAR-Dashboard-macOS-${{ github.ref_name }}.zip
           if-no-files-found: error
+          retention-days: 7
 
   release:
     runs-on: ubuntu-latest
@@ -113,14 +107,17 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
+          merge-multiple: true   # put all artifacts into one folder
           path: ./artifacts
+
+      - name: Show downloaded files
+        run: ls -lah artifacts
 
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            artifacts/win-zip/STAR-Dashboard-Windows-*.zip
-            artifacts/mac-zip/STAR-Dashboard-macOS-*.zip
+          name: "STAR Dashboard ${{ github.ref_name }}"
           generate_release_notes: true
+          files: artifacts/*.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
