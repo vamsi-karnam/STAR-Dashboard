@@ -167,7 +167,7 @@ STAR-Dashboard/
 If you find a bug, issue, or visual glitch:
 **Email:** [saivamsi.karnam@gmail.com](mailto:saivamsi.karnam@gmail.com)
 
-For **custom features, business integrations, or consulting inquiries** (e.g., Maritime IoT, Robotics, or AI systems):
+For **custom features, business integrations, or consulting inquiries** (e.g., IoT, Robotics, or AI systems):
 Please reach out directly via the same email.
 
 ---
