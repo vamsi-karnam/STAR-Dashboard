@@ -195,9 +195,9 @@ Full license: [LICENSE](https://github.com/vamsi-karnam/STAR-Dashboard?tab=Licen
 
 Developed by **Sai Vamsi Karnam**
 
-> *Principal Systems Architect — IoT / Robotics / Embedded AI Systems*
+> *Systems Architect — IoT / Robotics / Embedded AI Systems*
 
-[vamsi.karnam@outlook.com](mailto:saivamsi.karnam@outlook.com)
+[saivamsi.karnam@outlook.com](mailto:saivamsi.karnam@outlook.com)
 
 ---
 
