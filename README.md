@@ -2,6 +2,7 @@
 (Free demo)
 
 **Status Tracking & AI Reporting Dashboard**
+
 *A Local, Offline-First Task Management App*
 
 [GitHub release (latest)](https://github.com/vamsi-karnam/STAR-Dashboard/releases)
