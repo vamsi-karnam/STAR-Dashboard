@@ -33,7 +33,7 @@ It’s inspired by Task tracking applications - but redesigned for simplicity, c
 
 Runs locally via **Flask**, stores everything in a local **SQLite** database, and requires no sign-up, network access, or telemetry.
 
-> The **AI Reporting** and analytics module is currently **in development** for the Pro version, but the **task tracking dashboard** is fully functional.
+> The **AI Reporting** and analytics module is currently **in development** for the Pro version, but the **task tracking dashboard** is fully functional in the free demo.
 
 ---
 
