@@ -106,6 +106,17 @@
     </div>
   </div>
 
+  <button class="btn danger" id="quitAppBtn">Quit App</button>
+  <script>
+    document.getElementById('quitAppBtn')?.addEventListener('click', async () => {
+      if (!confirm('Quit STAR Dashboard?')) return;
+      await fetch('/shutdown', { method: 'POST', headers: { 'X-Shutdown-Token': '{{ SHUTDOWN_TOKEN }}' } });
+      // Optional: close the tab/window (may be blocked by some browsers)
+      window.close();
+    });
+  </script>
+
+
   <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>

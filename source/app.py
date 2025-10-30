@@ -8,10 +8,10 @@ See LICENSE for full terms
 
 from datetime import datetime, date
 from dateutil import tz
-import os
+import os, sys, time, threading, secrets
 from flask import (
     Flask, render_template, request, redirect, url_for, jsonify, abort,
-    send_from_directory
+    send_from_directory, g
 )
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import func, or_
@@ -125,6 +125,13 @@ def apply_task_filters(base_query):
         base_query = base_query.filter(~Task.tags.any(func.lower(Tag.name).in_([t.lower() for t in hide_tags])))
     return base_query, show_tags, hide_tags, q, include_archived
 
+# Ajax detection (used to decide JSON vs redirect)
+def is_ajax(req):
+    return req.headers.get('X-Requested-With') == 'XMLHttpRequest'
+
+SHUTDOWN_TOKEN = secrets.token_urlsafe(24)
+LAST_ACTIVITY = time.time()
+
 # --- Routes ---
 @app.route('/')
 def board():
@@ -207,13 +214,18 @@ def task_detail(task_id):
 @app.route('/tasks/<int:task_id>/comments', methods=['POST'])
 def add_comment(task_id):
     task = Task.query.get_or_404(task_id)
+    # NOTE: your template used "content" (not "comment"); keeping as-is
     content = request.form.get('content', '').strip()
     if not content:
         abort(400, 'Comment content required')
     c = Comment(task_id=task.id, content=content)
     db.session.add(c)
     db.session.commit()
-    return redirect(url_for('task_detail', task_id=task.id))
+
+    # AJAX => JSON (no navigation). Non-AJAX => PRG back to where user was.
+    if is_ajax(request):
+        return jsonify({"ok": True, "task_id": task.id, "content": content})
+    return redirect(request.referrer or url_for('board'))
 
 @app.route('/tasks/<int:task_id>/update', methods=['POST'])
 def update_task_meta(task_id):
@@ -303,10 +315,10 @@ def upload_attachments(task_id):
         att = Attachment(task_id=task.id, stored_name=stored, original_name=f.filename, mime_type=f.mimetype, size_bytes=size)
         db.session.add(att)
     db.session.commit()
-    # If AJAX/fetch request, return 204
-    if request.headers.get('X-Requested-With') == 'fetch':
-        return ('', 204)
-    # Fallback for non-AJAX submits
+
+    # AJAX to JSON; Non-AJAX to PRG back
+    if is_ajax(request):
+        return jsonify({"ok": True, "task_id": task.id})
     return redirect(request.referrer or url_for('board'))
 
 @app.route('/attachments/<int:att_id>/download')
@@ -390,14 +402,48 @@ def export_json():
         })
     return jsonify({'exported_at': datetime.utcnow().isoformat() + 'Z', 'tasks': payload})
 
+@app.before_request
+def _touch_activity():
+    global LAST_ACTIVITY
+    LAST_ACTIVITY = time.time()
+
+# --- Clean shutdown (no request leakage) ---
+def _do_shutdown(shutdown_func):
+    """Run outside request context."""
+    try:
+        time.sleep(0.15)  # time delay for HTTP 200 flush
+    except Exception:
+        pass
+    if shutdown_func:
+        try:
+            shutdown_func()  # Werkzeug clean shutdown
+            return
+        except Exception:
+            pass
+    os._exit(0)  # hard exit fallback
+
+@app.post('/shutdown')
+def shutdown():
+    if request.headers.get('X-Shutdown-Token') != SHUTDOWN_TOKEN:
+        abort(403)
+    # capture callable inside request context
+    shutdown_func = request.environ.get('werkzeug.server.shutdown')
+    threading.Thread(target=_do_shutdown, args=(shutdown_func,), daemon=True).start()
+    return 'Shutting down...', 200
+
+# make the token available to templates
+@app.context_processor
+def inject_shutdown_token():
+    return {'SHUTDOWN_TOKEN': SHUTDOWN_TOKEN}
+
 if __name__ == '__main__':
     import os, sys, threading, webbrowser
 
     init_db()
 
-    host = '127.0.0.1'
-    port = int(os.environ.get('PORT', 5000))
-    url  = f'http://{host}:{port}'
+    host = '0.0.0.0' #'127.0.0.1'
+    port = int(os.environ.get('PORT', 51410))
+    url  = f'http://127.0.0.1:{port}'
 
     def open_browser_once():
         # Avoid double-open when the reloader spawns
@@ -407,6 +453,7 @@ if __name__ == '__main__':
     # If running as a frozen app, disable debug & reloader
     is_frozen = getattr(sys, 'frozen', False)
     debug = False if is_frozen else True
+    use_reloader = not is_frozen
 
     threading.Timer(0.8, open_browser_once).start()
-    app.run(host=host, port=port, debug=debug)
+    app.run(host=host, port=port, debug=debug, use_reloader=use_reloader, threaded=True)

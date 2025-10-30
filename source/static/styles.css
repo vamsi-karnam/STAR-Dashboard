@@ -299,6 +299,26 @@ a:focus, button:focus, input:focus, textarea:focus, .tab:focus, .btn:focus {
   outline-offset: 2px;
 }
 
+#quitAppBtn {
+  position: fixed;
+  bottom: 30px;
+  left: 45px; /* adjust to avoid overlap with + button */
+  z-index: 100;
+  background: #401424;
+  border: 1px solid #992845;
+  color: #ffd8e3;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(255, 50, 80, 0.3);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+#quitAppBtn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
 /* Comments & attachments */
 .comments, .attachments { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .attach-form { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
