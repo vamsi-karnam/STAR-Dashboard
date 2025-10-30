@@ -15,7 +15,7 @@
 
 | Status Board                                          |
 | ----------------------------------------------------- | 
-| ![Status Board Screenshot](docs/image.png) |
+| ![Status Board Screenshot](docs/image-1.png) |
 
 ---
 
