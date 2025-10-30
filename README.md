@@ -1,9 +1,15 @@
 # STAR Dashboard
+(Free demo)
 
 **Status Tracking & AI Reporting Dashboard**
 *A Local, Offline-First Task Management App*
 
-[GitHub release (latest)](https://github.com/vamsi-karnam/STAR-Dashboard/releases/tag/v1.0)
+[GitHub release (latest)](https://github.com/vamsi-karnam/STAR-Dashboard/releases)
+
+V1.0.1 Changelog:
+- Functional Quit App to exit and shut down application services in the background.
+- The app can be accessed through other devices on the same LAN.
+- Fixed plain text redirect bugs on adding attachments and comments.
 
 > **Personal Use Only - No Commercial Use.**
 > See [LICENSE](https://github.com/vamsi-karnam/STAR-Dashboard?tab=License-1-ov-file) for full terms.
@@ -26,7 +32,7 @@ It’s inspired by Task tracking applications - but redesigned for simplicity, c
 
 Runs locally via **Flask**, stores everything in a local **SQLite** database, and requires no sign-up, network access, or telemetry.
 
-> The **AI Reporting** and analytics module is currently **in development**, but the **task tracking dashboard** is fully functional.
+> The **AI Reporting** and analytics module is currently **in development** for the Pro version, but the **task tracking dashboard** is fully functional.
 
 ---
 
