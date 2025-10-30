@@ -5,7 +5,7 @@
 
 [GitHub release (latest)](https://github.com/vamsi-karnam/STAR-Dashboard/releases/tag/v1.0)
 
-> **Personal Use Only — No Commercial Use.**
+> **Personal Use Only - No Commercial Use.**
 > See [LICENSE](https://github.com/vamsi-karnam/STAR-Dashboard?tab=License-1-ov-file) for full terms.
 > Attribution Required: “Based on software by **Sai Vamsi Karnam**”
 
