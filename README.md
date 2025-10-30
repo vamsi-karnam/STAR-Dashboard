@@ -184,7 +184,7 @@ Please reach out directly via the same email.
 ## License
 
 **Personal Use Source License (PUSL)**
-© 2025 Sai Vamsi Karnam — All Rights Reserved
+© 2025 Sai Vamsi Karnam - All Rights Reserved
 
 You may:
 
@@ -204,7 +204,7 @@ Full license: [LICENSE](https://github.com/vamsi-karnam/STAR-Dashboard?tab=Licen
 
 Developed by **Sai Vamsi Karnam**
 
-> *Systems Architect — IoT / Robotics / Embedded AI Systems*
+> *Systems Architect - IoT / Robotics / Embedded AI Systems*
 
 [saivamsi.karnam@gmail.com](mailto:saivamsi.karnam@gmail.com)
 
